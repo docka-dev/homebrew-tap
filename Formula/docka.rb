@@ -4,35 +4,35 @@
 class Docka < Formula
   desc "Self-hosted cloud infrastructure management platform"
   homepage "https://docka.dev"
-  version "0.2.12"
+  version "0.3.2"
   license "MIT"
 
   on_macos do
     on_arm do
       url "https://github.com/docka-dev/docka-releases/releases/download/v#{version}/docka-darwin-arm64.tar.gz"
-      sha256 "10c6a2d9fd420806238f72fe8ed2df9aa785c0eedf11e889aa18869f57a9b3d1"
+      sha256 "6abf43bbf2e12dccba0514029c32041897ce3755e78cf69b5f5a132950977d44"
     end
     on_intel do
       url "https://github.com/docka-dev/docka-releases/releases/download/v#{version}/docka-darwin-amd64.tar.gz"
-      sha256 "3ef2973e68892d18299a2081f1e0edffd8f4b17074791510d630147bce8e0f98"
+      sha256 "96d6ca2f9aa0126e758efdcbe5677101fa59b238be48f06bee88f6d707605146"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/docka-dev/docka-releases/releases/download/v#{version}/docka-linux-arm64.tar.gz"
-      sha256 "4e723ad54f8e049250bd2275d520a6f6f61bd7ec08f4dfd991f2a8aa4e5851bb"
+      sha256 "5be725a82dfdb0f8e1381520d570ad8b94051551fa537e4878cc03767585b57d"
     end
     on_intel do
       url "https://github.com/docka-dev/docka-releases/releases/download/v#{version}/docka-linux-amd64.tar.gz"
-      sha256 "45e5cd87dc651f0d7354b7c7310936ed2b87e26742ae5e27721391457b0037d6"
+      sha256 "d9bb0ad4d80aeb5c6858d137575e470e12a0fd2153eab38b1b20d951fd941176"
     end
   end
 
   def install
     bin.install "docka"
     bin.install "docka-server"
-    bin.install "docka-agent"
+    bin.install "docka-agent" if OS.linux?
   end
 
   def caveats
@@ -40,7 +40,7 @@ class Docka < Formula
       Docka has been installed!
 
       Quick start:
-        docka serve           # Start the Docka server
+        docka-server          # Start the Docka server
         docka --help          # CLI commands
 
       Documentation: https://docka.dev/docs
@@ -48,7 +48,7 @@ class Docka < Formula
   end
 
   service do
-    run [opt_bin/"docka", "serve"]
+    run [opt_bin/"docka-server"]
     keep_alive true
     working_dir var/"docka"
     log_path var/"log/docka.log"
