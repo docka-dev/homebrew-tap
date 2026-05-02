@@ -4,28 +4,28 @@
 class Docka < Formula
   desc "Self-hosted cloud infrastructure management platform"
   homepage "https://docka.dev"
-  version "0.4.7"
+  version "0.4.8"
   license "MIT"
 
   on_macos do
     on_arm do
       url "https://github.com/docka-dev/docka-releases/releases/download/v#{version}/docka-darwin-arm64.tar.gz"
-      sha256 "b24f90938b7e2d387e05f5192300588f9bb966a2721170b3b6de5a5680da3aa9"
+      sha256 "4917b3c7327965ed0f03c648e9f6b1853a44029b4555354376902a93f301f528"
     end
     on_intel do
       url "https://github.com/docka-dev/docka-releases/releases/download/v#{version}/docka-darwin-amd64.tar.gz"
-      sha256 "50850fc5aab5824af570372e2e6154ceae0eaab99ff3f199774e518f640b4315"
+      sha256 "ad6366b8c09bf45b5b3d1b6a6b4191bd2e61847b6a2e0da1c79a6d0289dde55e"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/docka-dev/docka-releases/releases/download/v#{version}/docka-linux-arm64.tar.gz"
-      sha256 "9c3a42979788f44d6a5846acd9265f3e9510379eacedb4eca242a9f565e87bba"
+      sha256 "66f3710f4a6909ec891cb828605daf11a469f6b9c108062bc96e76deb007cdd9"
     end
     on_intel do
       url "https://github.com/docka-dev/docka-releases/releases/download/v#{version}/docka-linux-amd64.tar.gz"
-      sha256 "1adece15c1059f8822a04f40a9547e2bfe99741884daef51047da8c1931ff0aa"
+      sha256 "b5f8b5aa86bcca608afb94f444acfb7482b8e5e7179f6a6ff83282975e95ed8b"
     end
   end
 
