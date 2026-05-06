@@ -4,35 +4,40 @@
 class Docka < Formula
   desc "Self-hosted cloud infrastructure management platform"
   homepage "https://docka.dev"
-  version "0.4.8"
+  version "0.4.13"
   license "MIT"
 
   on_macos do
     on_arm do
       url "https://github.com/docka-dev/docka-releases/releases/download/v#{version}/docka-darwin-arm64.tar.gz"
-      sha256 "4917b3c7327965ed0f03c648e9f6b1853a44029b4555354376902a93f301f528"
+      sha256 "5d15b181809febbc3253934015e5e962dec44d5ab03ccf2a669b373f20ed38fb"
     end
     on_intel do
       url "https://github.com/docka-dev/docka-releases/releases/download/v#{version}/docka-darwin-amd64.tar.gz"
-      sha256 "ad6366b8c09bf45b5b3d1b6a6b4191bd2e61847b6a2e0da1c79a6d0289dde55e"
+      sha256 "c17bf3dd96154b89e4ecbd8d8f6cc358653303300188f2a993b7f08823d40ffe"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/docka-dev/docka-releases/releases/download/v#{version}/docka-linux-arm64.tar.gz"
-      sha256 "66f3710f4a6909ec891cb828605daf11a469f6b9c108062bc96e76deb007cdd9"
+      sha256 "bfd502f7569836a1f99724c0cb091d15586b629e8855cd3a8f513f2e98689552"
     end
     on_intel do
       url "https://github.com/docka-dev/docka-releases/releases/download/v#{version}/docka-linux-amd64.tar.gz"
-      sha256 "b5f8b5aa86bcca608afb94f444acfb7482b8e5e7179f6a6ff83282975e95ed8b"
+      sha256 "6333f2fdf868352a485f2f915378d30c7acb2e5d55eb64a03876aa01068ccd45"
     end
   end
 
   def install
-    bin.install "docka"
-    bin.install "docka-server"
-    bin.install "docka-agent" if OS.linux?
+    binary_name = if OS.mac?
+      Hardware::CPU.arm? ? "docka-darwin-arm64" : "docka-darwin-amd64"
+    else
+      Hardware::CPU.arm? ? "docka-linux-arm64" : "docka-linux-amd64"
+    end
+
+    bin.install binary_name => "docka"
+    bin.install binary_name => "docka-server"
   end
 
   def caveats
@@ -41,9 +46,10 @@ class Docka < Formula
 
       Quick start:
         docka-server          # Start the Docka server
-        docka --help          # CLI commands
+        docka --version       # Inspect installed version
 
       Documentation: https://docka.dev/docs
+      Note: The Docka agent is distributed as a separate Linux-only release artifact.
     EOS
   end
 
@@ -56,6 +62,6 @@ class Docka < Formula
   end
 
   test do
-    assert_match "docka version", shell_output("#{bin}/docka --version")
+    assert_match version.to_s, shell_output("#{bin}/docka-server --version")
   end
 end
